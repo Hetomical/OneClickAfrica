@@ -55,3 +55,19 @@ Stack trace:
 [stacktrace]
 #0 {main}
 "} 
+[2025-11-12 13:38:10] local.ERROR: Uncaught Symfony\Component\Finder\Exception\DirectoryNotFoundException: The "/Users/macbook/Desktop/daratech/new_website/resources/views/modules/ads" directory does not exist. in /Users/macbook/Desktop/daratech/new_website/vendor/symfony/finder/Finder.php:592
+Stack trace:
+#0 /Users/macbook/Desktop/daratech/new_website/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(535): Symfony\Component\Finder\Finder->in('/Users/macbook/...')
+#1 Command line code(1): Illuminate\Filesystem\Filesystem->files('/Users/macbook/...')
+#2 Command line code(1): getViews('/Users/macbook/...', Object(Illuminate\Filesystem\Filesystem), 'ads', '::')
+#3 {main}
+  thrown {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Uncaught Symfony\\Component\\Finder\\Exception\\DirectoryNotFoundException: The \"/Users/macbook/Desktop/daratech/new_website/resources/views/modules/ads\" directory does not exist. in /Users/macbook/Desktop/daratech/new_website/vendor/symfony/finder/Finder.php:592
+Stack trace:
+#0 /Users/macbook/Desktop/daratech/new_website/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(535): Symfony\\Component\\Finder\\Finder->in('/Users/macbook/...')
+#1 Command line code(1): Illuminate\\Filesystem\\Filesystem->files('/Users/macbook/...')
+#2 Command line code(1): getViews('/Users/macbook/...', Object(Illuminate\\Filesystem\\Filesystem), 'ads', '::')
+#3 {main}
+  thrown at /Users/macbook/Desktop/daratech/new_website/vendor/symfony/finder/Finder.php:592)
+[stacktrace]
+#0 {main}
+"} 
