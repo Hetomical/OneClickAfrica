@@ -15,7 +15,7 @@
 
                         @foreach($primaryMenu as $mainMenu)
 
-                            @if($mainMenu->is_mega_menu == 'no')
+                            {{-- @if($mainMenu->is_mega_menu == 'no')
                                 <li class="nav-item sg-dropdown">
                                     <a href="{{menuUrl($mainMenu)}}" target="{{$mainMenu->new_teb == 1? '_blank':''}}">{{$mainMenu->label == 'gallery'? __('gallery'):$mainMenu->label}} @if(!blank($mainMenu->children))<span><i class="fa fa-angle-down" aria-hidden="true"></i></span>@endif </a>
                                     <ul class="sg-dropdown-menu">
@@ -30,29 +30,29 @@
                                         @endforeach
                                     </ul>
                                 </li>
-                            @endif
+                            @endif --}}
 
                             @if($mainMenu->is_mega_menu == 'tab')
 
                                 <li class="sg-dropdown mega-dropdown">
-                                    <a href="{{menuUrl($mainMenu) ? menuUrl($mainMenu) : "#" }}">{{$mainMenu->label == 'gallery'? __('gallery'):$mainMenu->label}}<span><i class="fa fa-angle-down" aria-hidden="true"></i></span></a>
+                                    {{-- <a href="{{menuUrl($mainMenu) ? menuUrl($mainMenu) : "#" }}">{{$mainMenu->label == 'gallery'? __('gallery'):$mainMenu->label}}<span><i class="fa fa-angle-down" aria-hidden="true"></i></span></a> --}}
                                     <div class="sg-dropdown-menu mega-dropdown-menu">
                                         <div class="mega-menu-content">
                                             <div class="row">
                                                 <div class="col-md-2">
                                                     <ul class="nav nav-tabs" role="tablist">
-                                                        @foreach($mainMenu->children as $child)
+                                                        {{-- @foreach($mainMenu->children as $child)
                                                             @php $key = 0 @endphp
                                                             <li class="nav-item">
                                                                 <a class="nav-link {{$mainMenu->children[$key]->id == $child->id? 'active':''}}" id="{{$child->label}}-tab" data-toggle="tab" href="#{{$child->category->slug}}" role="tab" aria-controls="{{$child->label}}" aria-selected="{{$mainMenu->children[$key]->id == $child->id? 'true':'false'}}">{{$child->label == 'gallery'? __('gallery'):$child->label}}</a>
                                                             </li>
                                                             @php $key++ @endphp
-                                                        @endforeach
+                                                        @endforeach --}}
                                                     </ul>
                                                 </div>
                                                 <div class="col-md-10">
                                                     <div class="tab-content" id="myTabContent">
-                                                        @foreach($mainMenu->children as $child)
+                                                        {{-- @foreach($mainMenu->children as $child)
                                                             <div class="tab-pane fade {{$mainMenu->children[0]->id == $child->id? 'show active':''}}" id="{{$child->category->slug}}" role="tabpanel" aria-labelledby="{{$child->label}}-tab">
                                                                 <div class="row">
                                                                     @foreach($child->postByCategory as $item)
@@ -91,7 +91,7 @@
                                                                     @endforeach
                                                                 </div><!-- /.row -->
                                                             </div><!-- /.tab-pane -->
-                                                        @endforeach
+                                                        @endforeach --}}
                                                     </div><!-- /.tab-content -->
                                                 </div>
                                             </div><!-- /.row -->
@@ -101,12 +101,13 @@
                             @endif
 
                             @if($mainMenu->is_mega_menu == 'category')
+
                                 <li class="sg-dropdown mega-dropdown">
-                                    <a href="{{menuUrl($mainMenu)}}" target="{{$mainMenu->new_teb == 1? '_blank':''}}">{{$mainMenu->label == 'gallery'? __('gallery'):$mainMenu->label}} @if(!blank($mainMenu->children))<span><i class="fa fa-angle-down" aria-hidden="true"></i></span>@endif</a>
+                                    {{-- <a href="{{menuUrl($mainMenu)}}" target="{{$mainMenu->new_teb == 1? '_blank':''}}">{{$mainMenu->label == 'gallery'? __('gallery'):$mainMenu->label}} @if(!blank($mainMenu->children))<span><i class="fa fa-angle-down" aria-hidden="true"></i></span>@endif</a> --}}
                                     <div class="sg-dropdown-menu mega-dropdown-menu">
                                         <div class="mega-menu-content">
                                             <div class="row">
-                                                @foreach($mainMenu->children as $child)
+                                                {{-- @foreach($mainMenu->children as $child)
                                                     <div class="col-md-3">
                                                         <h3>{{$child->label == 'gallery'? __('gallery'):$child->label}}</h3>
                                                         <ul class="global-list">
@@ -115,7 +116,7 @@
                                                             @endforeach
                                                         </ul>
                                                     </div>
-                                                @endforeach
+                                                @endforeach --}}
                                             </div><!-- /.row -->
                                         </div><!-- /.mega-menu-content -->
                                     </div>

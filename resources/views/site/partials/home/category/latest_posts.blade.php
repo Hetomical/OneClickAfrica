@@ -33,21 +33,23 @@
                             @endisset
                         </ul>
                     </div>
+
                     <div class="entry-content align-self-center">
-                        <h3 class="entry-title"><a
-                                href="{{ route('article.detail', ['id' => $post->slug]) }}">{!! \Illuminate\Support\Str::limit($post->title, 65) !!}</a>
-                        </h3>
-                        <div class="entry-meta mb-2">
-                            <ul class="global-list">
-                                <li>{{ __('post_by') }} <a href="{{ route('site.author',['id' => $post->user->id]) }}">{{$post->user->first_name}} </a></li>
-                                <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>
+    <h3 class="entry-title">
+            <a href="{{ route('article.detail', ['id' => $post->slug]) }}">{!! \Illuminate\Support\Str::limit($post->title, 65) !!}</a>
+    </h3>
+    <div class="entry-meta mb-2">
+        <ul class="global-list">
+            <li>{{ __('post_by') }} <a href="{{ route('site.author',['id' => $post->user->id]) }}">{{$post->user->first_name}} </a></li>
+            <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>
+            <li><i class="fa fa-eye">{{ $post->total_hit }}</i></li>
+        </ul>
+    </div>
+    <p style="margin-bottom:10px;">{!! strip_tags(\Illuminate\Support\Str::limit($post->content, 120)) !!}</p>
+    <a style="color:red;" href="{{ route('article.detail', ['id' => $post->slug]) }}" class="read-more-link">Read More →</a>
+</div>
 
-
-                              <li><i class="fa fa-eye">{{ $post->total_hit }}</i></li>
-                            </ul>
-                        </div>
-                        <p>{!! strip_tags(\Illuminate\Support\Str::limit($post->content, 120)) !!}</p>
-                    </div>
+                    
                 </div>
             @endforeach
         </div>
@@ -71,3 +73,111 @@
         @endif
     </div><!-- /.section-content -->
 </div><!-- /.sg-section -->
+
+<style>
+
+</style>
+
+<style>
+/* Keep left-right layout on mobile */
+@media (max-width: 575px) {
+    .medium-post-style-1 {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 12px;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .medium-post-style-1 .entry-header {
+        width: 40% !important;
+        flex-shrink: 0;
+        position: relative;
+    }
+
+    .medium-post-style-1 .entry-thumbnail {
+        width: 100%;
+        height: 0;
+        padding-bottom: 65%; /* Aspect ratio 358:215 */
+        position: relative;
+        overflow: hidden;
+        height:120px;
+        border-radius: 8px;
+    }
+
+    .medium-post-style-1 .entry-thumbnail a {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .medium-post-style-1 .entry-thumbnail img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .medium-post-style-1 .video-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+    }
+
+    .medium-post-style-1 .entry-content {
+        width: 60% !important;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .medium-post-style-1 .category {
+        margin-bottom: 8px;
+    }
+
+    .medium-post-style-1 .entry-title {
+        margin-bottom: 8px;
+    }
+
+    .medium-post-style-1 .entry-title a {
+        font-size: 14px;
+        line-height: 1.3;
+    }
+
+    .medium-post-style-1 .entry-meta {
+        margin-bottom: 8px !important;
+    }
+
+    .medium-post-style-1 .entry-meta ul {
+        font-size: 11px;
+    }
+
+    .medium-post-style-1 .entry-content p {
+        font-size: 12px;
+        line-height: 1.4;
+        margin-bottom: 8px;
+    }
+
+    /* Read More Link */
+    .medium-post-style-1 .read-more-link {
+        color: red;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 5px;
+    }
+
+    .medium-post-style-1 .read-more-link:hover {
+        color: red;
+        text-decoration: underline;
+    }
+}
+</style>

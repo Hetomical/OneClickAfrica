@@ -7,7 +7,7 @@
                         @if($widget['view'] == 'popular_post')
                             @include('site.widgets.footer.popular_post', $widget)
                         @elseif($widget['view'] == 'editor_picks')
-                            @include('site.widgets.footer.editor_picks', $widget)
+                            {{-- @include('site.widgets.footer.editor_picks', $widget) --}}
                         @elseif($widget['view'] == 'categories')
                             @include('site.widgets.footer.categories', $widget)
                         @elseif($widget['view'] == 'newsletter')
@@ -19,8 +19,15 @@
         </div><!-- /.container -->
     </div>
     <div class="footer-bottom">
-        <div class="container text-center">
-            <span>{{settingHelper('copyright_text')}}</span>
-        </div><!-- /.container -->
+    
+        <div class="container text-center" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <a href="{{ route('home') }}">Home</a>
+    <a href="{{ url('/page/about-us') }}">About</a>
+    <a href="{{ url('/page/contact-us') }}">Contact</a>
+    <a href="{{ url('/login') }}">Login</a>
+    <span>{{ settingHelper('copyright_text') }}</span>
+    
+</div>
+<!-- /.container -->
     </div>
 </div><!-- /.footer -->

@@ -16,6 +16,7 @@ class WidgetService extends Service
 {
     private $widgetViewMap = [
         WidgetContentType::POPULAR_POST         => 'popular_post',
+        WidgetContentType::CATEGORIES           => 'categories',
         WidgetContentType::TAGS                 => 'tags',
         WidgetContentType::CUSTOM               => 'custom',
         WidgetContentType::NEWS_LETTER          => 'newsletter',
@@ -24,7 +25,6 @@ class WidgetService extends Service
         WidgetContentType::RECOMMENDED_POSTS    => 'recommended_posts',
         WidgetContentType::VOTING_POLL          => 'voting_poll',
         WidgetContentType::AD                   => 'ad_widget',
-        WidgetContentType::CATEGORIES           => 'categories',
         WidgetContentType::EDITORS_PICKS        => 'editor_picks',
         WidgetContentType::FEATURED_POST        => 'featured_posts',
         WidgetContentType::ARCHIVE              => 'archive',

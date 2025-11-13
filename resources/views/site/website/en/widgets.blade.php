@@ -111,7 +111,7 @@
                     </ul>
     </div>
 </div><!-- /.sg-widget -->
-                    <div class="sg-widget">
+                    {{-- <div class="sg-widget">
     <h3 class="widget-title">Newsletter</h3>
     <div class="widget-newsletter text-center">
         <div class="icon">
@@ -125,7 +125,7 @@
             <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i><span class="d-none">Email Address</span></button>
         </form>
     </div>
-</div>
+</div> --}}
                                         <div class="sg-widget">
     <h3 class="widget-title">Recent Posts</h3>
     <div class="row">

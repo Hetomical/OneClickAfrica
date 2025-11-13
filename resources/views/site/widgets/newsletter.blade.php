@@ -1,4 +1,4 @@
-<div class="sg-widget">
+{{-- <div class="sg-widget">
     <h3 class="widget-title">{{ __('newsletter') }}</h3>
     <div class="widget-newsletter text-center">
         <div class="icon">
@@ -13,4 +13,4 @@
             <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i><span class="d-none">{{__('email_address')}}</span></button>
         </form>
     </div>
-</div>
+</div> --}}
