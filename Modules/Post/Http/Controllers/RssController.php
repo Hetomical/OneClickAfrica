@@ -434,7 +434,7 @@ class RssController extends Controller
             // Load RSS feed
             $feeds = simplexml_load_file($feed->feed_url, null, LIBXML_NOCDATA);
 
-            $main_url = (string) $feeds->channel->image->url;
+            $main_url = (string) $feeds->channel->image->url ?? NULL;
 
             if (empty($feeds)) {
                 return redirect()->back()->with('error', __('Failed to load RSS feed.'));
