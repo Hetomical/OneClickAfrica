@@ -17,6 +17,7 @@ div.phpdebugbar-openhandler {
 div.phpdebugbar,
 div.phpdebugbar-openhandler {
     background: var(--color-gray-800);
+    display: none;
 }
 
 div.phpdebugbar,

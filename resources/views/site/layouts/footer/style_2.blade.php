@@ -25,7 +25,13 @@
     <a href="{{ url('/page/about-us') }}">About</a>
     <a href="{{ url('/page/contact-us') }}">Contact</a>
     <a href="{{ url('/page/privacy-policy') }}">Private Policy</a>
+    @auth
+        <a href="{{ url('/dashboard') }}">Login</a>
+
+        @else
     <a href="{{ url('/login') }}">Login</a>
+
+    @endauth
 
     </div>
 
@@ -36,3 +42,26 @@
 <!-- /.container -->
     </div>
 </div><!-- /.footer -->
+
+
+<style>
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.footer {
+    margin-top: auto; /* Push footer to bottom */
+    width: 100%;
+}
+
+
+</style>

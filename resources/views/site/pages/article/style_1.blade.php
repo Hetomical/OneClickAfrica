@@ -8,14 +8,16 @@
     <h3 class="entry-title">{!! $post->title ?? '' !!}</h3>
     <div class="entry-meta mb-2">
         <ul class="global-list">
-            <li><i class="fa fa-calendar-minus-o" aria-hidden="true"></i>
-{{-- <a href="{{ route('article.date', date('Y-m-d', strtotime($post->updated_at))) }}">
-</a> --}}
-
-    {{ Carbon\Carbon::parse($post->updated_at)->format('F j, Y') }}
-
-            </li>
- <li><i class="fa fa-eye"></i> {{ $post->total_hit }}</li>
+            <li>
+    {{ __('post_by') }}
+    @if(!is_null($post->source_content))
+        {{ $post->source_content }}
+    @else
+        {{ $post->user->first_name }}
+    @endif
+</li>
+                                                        <li><a href="#"> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>
+                                                                                        <li><i class="fa fa-eye">{{ $post->total_hit }}</i></li>
 
     <!-- Share Button -->
     <li class="share-li">
