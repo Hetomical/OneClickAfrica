@@ -663,7 +663,18 @@ class RssController extends Controller
             // Get file type from the downloaded file
             $imageInfo = getimagesize($requestImage);
             $mime = $imageInfo['mime'] ?? '';
-            $fileType = str_replace('image/', '', $mime);
+            
+            // Map MIME type to file extension
+            $mimeToExt = [
+                'image/jpeg' => 'jpg',
+                'image/jpg' => 'jpg',
+                'image/png' => 'png',
+                'image/gif' => 'gif',
+                'image/webp' => 'webp',
+                'image/bmp' => 'bmp',
+            ];
+            
+            $fileType = $mimeToExt[$mime] ?? 'jpg';
         } else {
             $fileType = preg_replace("/.*\./", "", $requestImage);
         }
@@ -672,9 +683,9 @@ class RssController extends Controller
             $fileType = $type;
         }
 
-        $originalImageName = date('YmdHis') . "_original_" . rand(1, 50) . '.' . 'webp';
-        $ogImageName = date('YmdHis') . "_ogImage_" . rand(1, 50) . '.' . $fileType;
-        $thumbnailImageName = date('YmdHis') . "_thumbnail_100x100_" . rand(1, 50) . '.' . 'webp';
+        $originalImageName = date('YmdHis') . "_original_" . rand(1, 50) . '.webp';
+        $ogImageName = date('YmdHis') . "_ogImage_" . rand(1, 50) . '.webp';
+        $thumbnailImageName = date('YmdHis') . "_thumbnail_100x100_" . rand(1, 50) . '.webp';
         $bigImageName = date('YmdHis') . "_big_1080x1000_" . rand(1, 50) . '.' . 'webp';
         $bigImageNameTwo = date('YmdHis') . "_big_730x400_" . rand(1, 50) . '.' . 'webp';
         $mediumImageName = date('YmdHis') . "_medium_358x215_" . rand(1, 50) . '.' . 'webp';
@@ -759,7 +770,6 @@ class RssController extends Controller
 
         return $image->id;
     } catch (\Exception $e) {
-        dd($e->getMessage());
         Log::error('Image upload error: ' . $e->getMessage());
         return null;
     }
