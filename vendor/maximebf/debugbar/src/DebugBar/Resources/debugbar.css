@@ -104,7 +104,9 @@ a.phpdebugbar-restore-btn {
   color: #555;
   text-decoration: none;
   border-right: 1px solid #ddd;
+  display: none;
 }
+
 
 div.phpdebugbar-resize-handle {
   display: none;
