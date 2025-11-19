@@ -544,20 +544,49 @@ class RssController extends Controller
         }
     }
 
-   public static function getDomainNameWithoutTLD($url) {
-        // Parse the host from the URL
+    public static function getDomainNameWithoutTLD($url)
+    {
         $host = parse_url($url, PHP_URL_HOST);
     
         if (!$host) {
-            return null; // Invalid URL
+            return null;
         }
     
-        // Remove the TLD (like ".com")
-        $name = preg_replace('/\.[^.]+$/', '', $host);
+        // Remove www
+        $host = preg_replace('/^www\./i', '', $host);
     
-        return $name;
+        // Split into parts
+        $parts = explode('.', $host);
+        $count = count($parts);
+    
+        if ($count < 2) {
+            return $host;
+        }
+    
+        // Common multi-part TLDs
+        $multiTLDs = [
+            'co.uk', 'com.ng', 'com.gh', 'com.sa', 'gov.ng', 'org.ng', 'co.za',
+            'ac.uk', 'edu.ng'
+        ];
+    
+        // Build last two parts and last three parts
+        $last2 = $parts[$count-2] . '.' . $parts[$count-1];
+        $last3 = ($count >= 3) ? $parts[$count-3] . '.' . $parts[$count-2] . '.' . $parts[$count-1] : null;
+    
+        // If last 2 match a known multi TLD → domain is before them
+        if (in_array($last2, $multiTLDs)) {
+            return $parts[$count-3]; // domain before TLD
+        }
+        
+        // If last 3 match (rare) multi-TLD patterns
+        if ($last3 && in_array($last3, $multiTLDs)) {
+            return $parts[$count-4];
+        }
+    
+        // Standard TLD → return second to last part
+        return $parts[$count-2];
     }
-
+    
     public static function cleanImageUrl($url)
     {
         return preg_replace('/\?.*/', '', $url);

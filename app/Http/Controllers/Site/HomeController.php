@@ -42,7 +42,7 @@ class HomeController extends Controller
                         ->where('slider', '!=', 1)
                         ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                         ->orderBY('id', 'desc')
-                        ->limit(10)->get();
+                        ->limit(15)->get();
                 });
             else:
 
@@ -91,7 +91,7 @@ class HomeController extends Controller
                     ->where('status', 1)
                     ->orderBy('id', 'desc')
                     ->where('language', \App::getLocale() ?? settingHelper('default_language'))
-                    ->limit(10)
+                    ->limit(15)
                     ->get();
             });
 
@@ -117,7 +117,7 @@ class HomeController extends Controller
                             ->when(Sentinel::check() == false, function ($query) {
                                 $query->where('auth_required', 0);
                             })
-                            ->limit(10)->get();
+                            ->limit(15)->get();
                     });
                 else:
                     $primarySectionPosts = [];
@@ -179,7 +179,7 @@ class HomeController extends Controller
                     })
                     ->orderBy('id', 'desc')
                     ->where('language', \App::getLocale() ?? settingHelper('default_language'))
-                    ->limit(10)
+                    ->limit(15)
                     ->get();
             });
 
