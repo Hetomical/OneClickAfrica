@@ -18,7 +18,7 @@
     @endif
 </li>
                                                         <li><a href="#"> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>
-                                                                                        <li><i class="fa fa-eye">{{ $post->total_hit }}</i></li>
+                                                                                        {{-- <li><i class="fa fa-eye">{{ $post->total_hit }}</i></li> --}}
                             </ul>
                         </div>
                     </div>

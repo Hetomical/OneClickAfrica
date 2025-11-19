@@ -43,8 +43,8 @@
                         <h2 class="entry-title"><a href="{{ route('article.detail', [$post->slug]) }}">{{ \Illuminate\Support\Str::limit(data_get($post, 'title'), 18) }}</a></h2>
                         <div class="entry-meta">
                             <ul class="global-list">
-                                <li>{{ __('post_by') }}<a href="{{ route('site.author',['id' => $post->user->id]) }}"> {{ data_get($post, 'user.first_name') }}</a></li>
-                                <li> <a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}">{{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>
+                                <li>{{ __('post_by') }} {{ data_get($post, 'user.first_name') }}</li>
+                                <li> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</li>
                             </ul>
                         </div>
                     </div>
