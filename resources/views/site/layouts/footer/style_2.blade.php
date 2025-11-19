@@ -24,7 +24,7 @@
         <a href="{{ route('home') }}">Home</a>
     <a href="{{ url('/page/about-us') }}">About</a>
     <a href="{{ url('/page/contact-us') }}">Contact</a>
-    <a href="{{ url('/page/privacy-policy') }}">Private Policy</a>
+    <a href="{{ url('/page/privacy-policy') }}">Privacy Policy</a>
     @auth
         <a href="{{ url('/dashboard') }}">Login</a>
 
