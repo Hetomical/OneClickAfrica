@@ -91,7 +91,7 @@ class HomeController extends Controller
                     ->where('status', 1)
                     ->orderBy('id', 'desc')
                     ->where('language', \App::getLocale() ?? settingHelper('default_language'))
-                    ->limit(6)
+                    ->limit(10)
                     ->get();
             });
 
@@ -179,7 +179,7 @@ class HomeController extends Controller
                     })
                     ->orderBy('id', 'desc')
                     ->where('language', \App::getLocale() ?? settingHelper('default_language'))
-                    ->limit(6)
+                    ->limit(10)
                     ->get();
             });
 

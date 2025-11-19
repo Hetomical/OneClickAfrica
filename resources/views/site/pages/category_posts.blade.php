@@ -61,7 +61,7 @@
                                                 </div>
                                                 <p>{!! strip_tags(\Illuminate\Support\Str::limit($post->content, 120)) !!}</p>
                                                 <p style="margin-bottom:10px;">{!! strip_tags(\Illuminate\Support\Str::limit($post->content, 120)) !!}</p>
-                        <a style="color:red;" href="{{ route('article.detail', ['id' => $post->slug]) }}" class="read-more-link">Read More →</a>
+                        <a style="color:green;" href="{{ route('article.detail', ['id' => $post->slug]) }}" class="read-more-link">Read More →</a>
                                             </div>
                                         </div>
                                         @endforeach

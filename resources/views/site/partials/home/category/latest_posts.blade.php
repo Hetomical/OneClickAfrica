@@ -53,7 +53,7 @@
                             </ul>
                         </div>
                         <p style="margin-bottom:10px;">{!! strip_tags(\Illuminate\Support\Str::limit($post->content, 120)) !!}</p>
-                        <a style="color:red;" href="{{ route('article.detail', ['id' => $post->slug]) }}" class="read-more-link">Read More →</a>
+                        <a style="color:green;" href="{{ route('article.detail', ['id' => $post->slug]) }}" class="read-more-link">Read More →</a>
                     </div>
                 </div>
             @endforeach
@@ -69,8 +69,8 @@
         </div>
         <div class="col-sm-12 col-xs-12">
             <div class="row">
-                <button class="btn-load-more {{ $totalPostCount > 6? '':'d-none'}}" id="btn-load-more"> {{ __('load_more') }} </button>
-                <button class="btn-load-more {{ $totalPostCount > 6? 'd-none':''}}" id="no-more-data">
+                <button class="btn-load-more {{ $totalPostCount > 10? '':'d-none'}}" id="btn-load-more"> {{ __('load_more') }} </button>
+                <button class="btn-load-more {{ $totalPostCount > 10? 'd-none':''}}" id="no-more-data">
                     {{ __('no_more_records') }}
                 </button>
                 <input type="hidden" id="url" value="{{ url('') }}">
