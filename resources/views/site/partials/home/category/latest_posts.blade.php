@@ -28,9 +28,14 @@
                     </div>
                     <div class="category">
                         <ul class="global-list">
-                            @isset($post->category->category_name)
-                                <li><a href="{{ url('category',$post->category->slug) }}">{{ $post->category->category_name }}</a></li>
-                            @endisset
+                           @isset($post->category->category_name)
+    <li class="d-none d-md-block">
+        <a href="{{ url('category', $post->category->slug) }}">
+            {{ $post->category->category_name }}
+        </a>
+    </li>
+@endisset
+
                         </ul>
                     </div>
 
