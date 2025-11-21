@@ -14,7 +14,9 @@
     @if(!is_null($post->source_content))
         {{ $post->source_content }}
     @else
-        {{ $post->user->first_name }}
+        oneclickafrica
+
+        {{-- {{ $post->user->first_name }} --}}
     @endif
 </li>
                                                         <li><a href="#"> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>

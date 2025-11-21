@@ -74,6 +74,17 @@
         gtag('config', '{{ settingHelper('google_analytics_id') }}');
     </script>
 </head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WC8GN12NX2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WC8GN12NX2');
+</script>
+
 {{-- dark class="sg-dark" --}}
 <body class="{{defaultModeCheck()}}">
 <div  style="display:none;" id="switch-mode" class="{{defaultModeCheck() == 'sg-dark'? 'active':''}}">
