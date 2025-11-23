@@ -65,6 +65,8 @@
                 </div>
             @endforeach
         </div>
+
+
         @if($posts->count() != 0)
         <input type="hidden" id="last_id" value="1">
         <div class="col-sm-12 col-xs-12 d-none" id="latest-preloader-area">
@@ -75,8 +77,10 @@
             </div>
         </div>
         <div class="col-sm-12 col-xs-12">
+        
             <div class="row">
-                <button class="btn-load-more {{ $totalPostCount > 10? '':'d-none'}}" id="btn-load-more"> {{ __('load_more') }} </button>
+                <button class="btn-load-more {{ $totalPostCount > 10? '':'d-none'}}" id="btn-load-more"> {{ __('load_more') }}    
+ </button>
                 <button class="btn-load-more {{ $totalPostCount > 10? 'd-none':''}}" id="no-more-data">
                     {{ __('no_more_records') }}
                 </button>
@@ -188,4 +192,55 @@
         text-decoration: underline;
     }
 }
+
+
 </style>
+
+<script>
+$(document).ready(function () {
+
+    $("#btn-load-more-category").on('click', function () {
+
+        let lastId     = parseInt($("#last_id").val());
+        let categoryId = $("#category_id").val();
+        let baseUrl    = $("#url").val();
+
+        $("#latest-preloader-area").removeClass('d-none');
+
+        $.ajax({
+            url: baseUrl + "/get-read-more-post-latest",
+            type: "GET",
+            data: {
+                last_id: lastId,
+                category_id: categoryId
+            },
+            success: function (response) {
+
+                let posts = response[0];
+                let hideButton = response[1];
+
+                // Append each row
+                posts.forEach(function (row) {
+                    $(".latest-post-area").append(row);
+                });
+
+                // Increase last_id
+                $("#last_id").val(lastId + 1);
+
+                // Hide / Show buttons
+                if (hideButton == 1) {
+                    $("#btn-load-more-category").addClass("d-none");
+                    $("#no-more-data").removeClass("d-none");
+                }
+
+                $("#latest-preloader-area").addClass('d-none');
+            },
+            error: function () {
+                $("#latest-preloader-area").addClass('d-none');
+                alert("Something went wrong!");
+            }
+        });
+    });
+
+});
+</script>

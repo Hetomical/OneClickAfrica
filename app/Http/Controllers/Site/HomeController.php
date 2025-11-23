@@ -95,6 +95,9 @@ class HomeController extends Controller
                     ->get();
             });
 
+
+           
+
             $totalPostCount     = Cache::remember('totalPostCountAuth', $seconds = 0, function () {
                 return Post::where('visibility', 1)
                     ->where('status', 1)
@@ -183,6 +186,7 @@ class HomeController extends Controller
                     ->get();
             });
 
+            
             $totalPostCount     = Cache::remember('totalPostCount', $seconds = 0, function () {
                 return Post::where('visibility', 1)
                     ->where('status', 1)

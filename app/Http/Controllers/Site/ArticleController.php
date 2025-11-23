@@ -25,6 +25,8 @@ use App\VisitorTracker;
 use App\Reaction;
 use Sentinel;
 use Modules\Ads\Entities\Ad;
+use Carbon\Carbon;
+
 
 class ArticleController extends Controller
 {
@@ -544,7 +546,7 @@ class ArticleController extends Controller
 
 	//post by sub category
 
-	public function getReadMorePostCategory(Request $request)
+	public function getReadMorePostCategory_old(Request $request)
 	{
 
 		$skip = $request->last_id * 6;
@@ -622,6 +624,180 @@ class ArticleController extends Controller
 		}
 		return response()->json([$allPosts, $hideReadMore]);
 	}
+
+
+	public function getReadMorePostCategory(Request $request)
+{
+    $skip = $request->last_id * 6;
+
+    $postCount = Post::where('category_id', $request->category_id)
+        ->where('visibility', 1)
+        ->where('status', 1)
+        ->when(Sentinel::check() == false, function ($query) {
+            $query->where('auth_required', 0);
+        })
+        ->orderBy('id', 'desc')
+        ->where('language', \App::getLocale() ?? settingHelper('default_language'))
+        ->count();
+
+    $hideReadMore = $skip >= $postCount ? 1 : 0;
+
+    $posts = Post::with(['image', 'user'])
+        ->where('category_id', $request->category_id)
+        ->where('visibility', 1)
+        ->where('status', 1)
+        ->when(Sentinel::check() == false, function ($query) {
+            $query->where('auth_required', 0);
+        })
+        ->orderBy('id', 'desc')
+        ->where('language', \App::getLocale() ?? settingHelper('default_language'))
+        ->limit(6)
+        ->skip($skip)
+        ->get();
+
+    $allPosts = [];
+
+    foreach ($posts as $post) {
+        $appendRow  = "<div class='sg-post medium-post-style-1'>";
+        $appendRow .= "<div class='entry-header'>";
+        $appendRow .= "<div class='entry-thumbnail'>";
+        $appendRow .= "<a href='" . route('article.detail', ['id' => $post->slug]) . "'>";
+
+        if (isFileExist($post->image, $result = @$post->image->medium_image)) {
+            $appendRow .= "<img src='" . basePath($post->image) . '/' . $result . "' class='img-fluid' alt='" . $post->title . "'>";
+        } else {
+            $appendRow .= "<img src='" . static_asset('default-image/default-240x160.png') . "' class='img-fluid' alt='" . $post->title . "'>";
+        }
+
+        $appendRow .= "</a>";
+        $appendRow .= "</div>";
+
+        if ($post->post_type == "video") {
+            $appendRow .= "<div class='video-icon large-block'>";
+            $appendRow .= "<img src='" . static_asset('default-image/video-icon.svg') . "' alt='video-icon'>";
+            $appendRow .= "</div>";
+        } elseif ($post->post_type == "audio") {
+            $appendRow .= "<div class='video-icon large-block'>";
+            $appendRow .= "<img src='" . static_asset('default-image/audio-icon.svg') . "' alt='audio-icon'>";
+            $appendRow .= "</div>";
+        }
+
+        $appendRow .= "</div>";
+        $appendRow .= "<div class='entry-content align-self-center'>";
+        $appendRow .= "<h3 class='entry-title'>";
+        $appendRow .= "<a href='" . route('article.detail', ['id' => $post->slug]) . "'>" . \Illuminate\Support\Str::limit($post->title, 60) . "</a>";
+        $appendRow .= "</h3>";
+
+        $appendRow .= "<div class='entry-meta mb-2'>";
+        $appendRow .= "<ul class='global-list'>";
+        // $appendRow .= "<li>" . __('post_by') . " <a href='" . route('site.author', ['id' => $post->user->id]) . "'>" . data_get($post, 'user.first_name') . "</a></li>";
+		$authorName = !is_null($post->source_content) ? $post->source_content : 'oneclickafrica';
+$appendRow .= "<li>" . __('post_by') . " " . $authorName . "</a></li>";
+
+
+        // ⛔ Removed Carbon  
+        // ✅ Replaced with plain PHP date()
+        $appendRow .= "<li>".
+            date('F j, Y', strtotime($post->updated_at)) . "</a></li>";
+
+        $appendRow .= "</ul>";
+        $appendRow .= "</div>";
+
+        $appendRow .= "<p>" . strip_tags(\Illuminate\Support\Str::limit($post->content, 150)) . "</p>";
+		$appendRow .= "<a style='color:green;' href='" . route('article.detail', ['id' => $post->slug]) . "' class='read-more-link'>Read More →</a>";
+
+        $appendRow .= "</div>";
+        $appendRow .= "</div>";
+
+        $allPosts[] = $appendRow;
+    }
+
+    return response()->json([$allPosts, $hideReadMore]);
+}
+
+
+
+public function getReadMoreLatestPosts(Request $request)
+{
+    $skip = $request->last_id * 15;
+
+    $postCount = Post::where('visibility', 1)
+        ->where('status', 1)
+        ->when(Sentinel::check() == false, function ($query) {
+            $query->where('auth_required', 0);
+        })
+        ->where('language', \App::getLocale() ?? settingHelper('default_language'))
+        ->count();
+
+    $hideReadMore = $skip >= $postCount ? 1 : 0;
+
+    $posts = Post::with(['image', 'user'])
+        ->where('visibility', 1)
+        ->where('status', 1)
+        ->when(Sentinel::check() == false, function ($query) {
+            $query->where('auth_required', 0);
+        })
+        ->where('language', \App::getLocale() ?? settingHelper('default_language'))
+        ->orderBy('id', 'desc')
+        ->limit(15)
+        ->skip($skip)
+        ->get();
+
+    $allPosts = [];
+
+    foreach ($posts as $post) {
+        $appendRow  = "<div class='sg-post medium-post-style-1'>";
+        $appendRow .= "<div class='entry-header'>";
+        $appendRow .= "<div class='entry-thumbnail'>";
+        $appendRow .= "<a href='" . route('article.detail', ['id' => $post->slug]) . "'>";
+
+        if (isFileExist($post->image, $result = @$post->image->medium_image)) {
+            $appendRow .= "<img src='" . basePath($post->image) . '/' . $result . "' class='img-fluid' alt='" . $post->title . "'>";
+        } else {
+            $appendRow .= "<img src='" . static_asset('default-image/default-240x160.png') . "' class='img-fluid' alt='" . $post->title . "'>";
+        }
+
+        $appendRow .= "</a>";
+        $appendRow .= "</div>";
+
+        if ($post->post_type == "video") {
+            $appendRow .= "<div class='video-icon large-block'>";
+            $appendRow .= "<img src='" . static_asset('default-image/video-icon.svg') . "' alt='video-icon'>";
+            $appendRow .= "</div>";
+        } elseif ($post->post_type == "audio") {
+            $appendRow .= "<div class='video-icon large-block'>";
+            $appendRow .= "<img src='" . static_asset('default-image/audio-icon.svg') . "' alt='audio-icon'>";
+            $appendRow .= "</div>";
+        }
+
+        $appendRow .= "</div>";
+        $appendRow .= "<div class='entry-content align-self-center'>";
+        $appendRow .= "<h3 class='entry-title'>";
+        $appendRow .= "<a href='" . route('article.detail', ['id' => $post->slug]) . "'>" . \Illuminate\Support\Str::limit($post->title, 60) . "</a>";
+        $appendRow .= "</h3>";
+
+        $appendRow .= "<div class='entry-meta mb-2'>";
+        $appendRow .= "<ul class='global-list'>";
+
+        $authorName = !is_null($post->source_content) ? $post->source_content : 'oneclickafrica';
+        $appendRow .= "<li>" . __('post_by') . " " . $authorName . "</li>";
+
+        $appendRow .= "<li>" . date('F j, Y', strtotime($post->updated_at)) . "</li>";
+
+        $appendRow .= "</ul>";
+        $appendRow .= "</div>";
+
+        $appendRow .= "<p>" . strip_tags(\Illuminate\Support\Str::limit($post->content, 150)) . "</p>";
+        $appendRow .= "<a style='color:green;' href='" . route('article.detail', ['id' => $post->slug]) . "' class='read-more-link'>Read More →</a>";
+
+        $appendRow .= "</div>";
+        $appendRow .= "</div>";
+
+        $allPosts[] = $appendRow;
+    }
+
+    return response()->json([$allPosts, $hideReadMore]);
+}
 
 	public function postBySubCategory($slug)
 	{
@@ -855,7 +1031,7 @@ class ArticleController extends Controller
 			$appendRow .= "<div class='entry-meta mb-2'>";
 			$appendRow .= "<ul class='global-list'>";
 			$appendRow .= "<li> " . __('post_by') . " <a href='" . route('site.author', ['id' => $post->user->id]) . "'> " . data_get($post, 'user.first_name') . " </a></li>";
-			$appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') . "</a></li>";
+			// $appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') . "</a></li>";
 			$appendRow .= "</ul>";
 			$appendRow .= "</div> ";
 			$appendRow .= "<p>" . strip_tags(\Illuminate\Support\Str::limit($post->content, 150)) . "</p>";
@@ -1024,7 +1200,7 @@ class ArticleController extends Controller
 
 	public function getReadMorePost(Request $request)
 	{
-		$skip = $request->last_id * 6;
+		$skip = $request->last_id * 15;
 		$postCount = Post::where('visibility', 1)
 			->where('status', 1)
 			->when(Sentinel::check() == false, function ($query) {
@@ -1041,7 +1217,7 @@ class ArticleController extends Controller
 				$query->where('auth_required', 0);
 			})
 			->orderBy('id', 'desc')
-			->limit(6)
+			->limit(15)
 			->skip($skip)
 			->where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
 
@@ -1073,7 +1249,7 @@ class ArticleController extends Controller
 			$appendRow .= "<div class='category'>";
 			$appendRow .= "<ul class='global-list'>";
 			if ($post->category != "") :
-				$appendRow .= "<li><a href='" . url('category', $post->category->slug) . "'> " . $post->category->category_name . "</a></li>";
+				$appendRow .= "<li class='d-none d-md-block'><a href='" . url('category', $post->category->slug) . "'> " . $post->category->category_name . "</a></li>";
 			endif;
 			$appendRow .= "</ul>";
 			$appendRow .= "</div>";
@@ -1086,11 +1262,16 @@ class ArticleController extends Controller
 
 			$appendRow .= "<div class='entry-meta mb-2'>";
 			$appendRow .= "<ul class='global-list'>";
-			$appendRow .= "<li> " . __('post_by') . " <a href='" . route('site.author', ['id' => $post->user->id]) . "'> " . data_get($post, 'user.first_name') . " </a></li>";
-			$appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') . "</a></li>";
-			$appendRow .= "</ul>";
-			$appendRow .= "</div> ";
-			$appendRow .= "<p>" . strip_tags(\Illuminate\Support\Str::limit($post->content, 150)) . "</p>";
+			$authorName = !is_null($post->source_content) ? $post->source_content : 'oneclickafrica';
+        $appendRow .= "<li>" . __('post_by') . " " . $authorName . "</li>";
+
+        $appendRow .= "<li>" . date('F j, Y', strtotime($post->updated_at)) . "</li>";
+
+        $appendRow .= "</ul>";
+        $appendRow .= "</div>";
+
+        $appendRow .= "<p>" . strip_tags(\Illuminate\Support\Str::limit($post->content, 150)) . "</p>";
+        $appendRow .= "<a style='color:green;' href='" . route('article.detail', ['id' => $post->slug]) . "' class='read-more-link'>Read More →</a>";
 			$appendRow .= "</div>";
 			$appendRow .= "</div>";
 

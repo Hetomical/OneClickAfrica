@@ -47,6 +47,11 @@ Route::group(
 			Route::get('sub-category/{slug}','ArticleController@postBySubCategory')->name('site.sub-category');
 			Route::get('get-read-more-post-subcategory','ArticleController@getPostSubcategory');
 			Route::get('get-read-more-post-category','ArticleController@getReadMorePostCategory');
+
+
+			Route::get('get-read-more-post-latest','ArticleController@getReadMoreLatestPosts');
+
+
 			Route::get('tags/{slug}','ArticleController@postByTags')->name('site.tags');
 			Route::get('get-read-more-post-tags','ArticleController@getReadMorePostTags');
 			Route::get('get-read-more-post','ArticleController@getReadMorePost');
