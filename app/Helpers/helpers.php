@@ -19,7 +19,7 @@ function activeTheme()
     return $activeTheme;
 }
 
-function menuUrl($menu)
+function menuUrl_old($menu)
 {
     if ($menu->source       == 'custom'):
 
@@ -46,6 +46,45 @@ function menuUrl($menu)
 
     endif;
 }
+
+function menuUrl($menu)
+{
+    if ($menu->source == 'custom') {
+
+        return $menu->url ?? '#';
+
+    } elseif ($menu->source == 'category') {
+
+        return $menu->category
+            ? route('site.category', ['slug' => $menu->category->slug])
+            : '#';
+
+    } elseif ($menu->source == 'sub-category') {
+
+        return $menu->category
+            ? route('site.sub-category', ['slug' => $menu->category->slug])
+            : '#';
+
+    } elseif ($menu->source == 'page') {
+
+        if (empty($menu->page_id)) {
+            return route('image.albums');
+        }
+
+        return $menu->page
+            ? route('site.page', ['slug' => $menu->page->slug])
+            : '#';
+
+    } elseif ($menu->source == 'post') {
+
+        return $menu->post
+            ? route('article.detail', ['id' => $menu->post->slug])
+            : '#';
+    }
+
+    return '#';
+}
+
 
 if (!function_exists('isAppMode')){
     function isAppMode(): bool
