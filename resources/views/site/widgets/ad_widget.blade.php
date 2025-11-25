@@ -1,7 +1,7 @@
 @php
     $ad = data_get($widget, 'detail.ad');
 
-    dd($ad);
+    var_export($ad);
 @endphp
 
 @if(!blank($ad))
