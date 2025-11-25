@@ -18,6 +18,7 @@
             @elseif(data_get($ad, 'ad_type') == 'text')
                 {!! $ad->ad_text ?? '' !!}
             @endif
+            
         </div>
     </div>
 @endif
