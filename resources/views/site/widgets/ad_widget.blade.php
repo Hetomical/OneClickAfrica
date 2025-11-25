@@ -1,5 +1,7 @@
 @php
     $ad = data_get($widget, 'detail.ad');
+
+    dd($ad);
 @endphp
 
 @if(!blank($ad))
@@ -18,7 +20,7 @@
             @elseif(data_get($ad, 'ad_type') == 'text')
                 {!! $ad->ad_text ?? '' !!}
             @endif
-            
+
         </div>
     </div>
 @endif
