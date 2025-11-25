@@ -16,7 +16,7 @@
                                 @endif
                             </a>
                         @elseif(@$ad->ad_type == 'code')
-                            {!! $ad->ad_code ?? '' !!}
+{!! base64_decode($ad->ad_code ?? '') !!}
                         @elseif(@$ad->ad_type == 'text')
                             {!! $ad->ad_text ?? '' !!}
                         @endif
