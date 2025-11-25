@@ -12,7 +12,7 @@
                         @endif
                     </a>
                 @elseif(data_get($ad, 'ad_type') == 'code')
-                    {!! $ad->ad_code ?? '' !!}
+{!! base64_decode($ad->ad_code ?? '') !!}
                 @elseif(data_get($ad, 'ad_type') == 'text')
                     {!! $ad->ad_text ?? '' !!}
                 @endif
